@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Nosso Amor ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: black;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* INICIO */
+#inicio {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:black;
+}
+input {
+    padding:10px;
+    border-radius:20px;
+    border:none;
+}
+button {
+    margin-top:10px;
+    padding:10px 25px;
+    border:none;
+    border-radius:20px;
+    background:red;
+    color:white;
+}
+
+/* ENVELOPE */
+#envelope {
+    position:absolute;
+    top:40%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+#btnAbrir {
+    background:#ff0040;
+    padding:15px 30px;
+    border-radius:30px;
+    cursor:pointer;
+    animation:pulse 1.5s infinite;
+}
+@keyframes pulse {
+    50%{transform:scale(1.05);}
+}
+
+/* CARTA */
+#carta {
+    position:absolute;
+    top:15%;
+    left:50%;
+    transform:translateX(-50%) scale(0.8);
+    width:90%;
+    max-width:500px;
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:15px;
+    opacity:0;
+    transition:1s;
+}
+
+/* FOTO */
+#foto {
+    position:absolute;
+    top:20%;
+    left:50%;
+    transform:translateX(-50%) scale(1);
+    height:50vh;
+    border-radius:20px;
+    opacity:0;
+    transition:opacity 1s, transform 6s;
+}
+
+/* FRASE */
+#frase {
+    position:absolute;
+    top:75%;
+    left:50%;
+    transform:translateX(-50%);
+    color:pink;
+    opacity:0;
+    transition:1s;
+}
+
+/* CONTADOR */
+#contador {
+    position:fixed;
+    bottom:10px;
+    width:100%;
+}
+
+/* FINAL */
+#final {
+    position:fixed;
+    width:100%;
+    height:100%;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:black;
+}
+#final h1 {
+    font-size:60px;
+    color:#ff4d6d;
+}
+
+/* CORAÇÕES */
+.heart {
+    position:fixed;
+    top:-50px;
+    color:red;
+    animation:cair 5s linear forwards;
+}
+@keyframes cair {
+    to{transform:translateY(110vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="inicio">
+    <h2>Digite nosso segredo 💖</h2>
+    <input id="senha" type="password">
+    <button onclick="entrar()">Entrar</button>
+</div>
+
+<div id="conteudo" style="display:none;">
+    <div id="envelope">
+        <div id="btnAbrir" onclick="abrirCarta()">💌 Abrir carta</div>
+    </div>
+
+    <div id="carta"></div>
+    <img id="foto">
+    <div id="frase"></div>
+    <div id="contador"></div>
+</div>
+
+<div id="final">
+    <h1>MIRELA ❤️</h1>
+    <p>Você é o amor da minha vida</p>
+</div>
+
+<script>
+
+// SENHA
+function entrar(){
+    let senha=document.getElementById("senha").value;
+    if(senha==="1911"){
+        inicio.style.display="none";
+        conteudo.style.display="block";
+        chuva();
+    } else alert("Senha errada 😢");
+}
+
+// ABRIR CARTA
+function abrirCarta(){
+    envelope.style.display="none";
+
+    let carta=document.getElementById("carta");
+    carta.style.opacity=1;
+    carta.style.transform="translateX(-50%) scale(1)";
+
+    cartaAnimada();
+}
+
+// CARTA
+function cartaAnimada(){
+let texto=`Amor... 💖
+
+Eu fico pensando em tudo que a gente já viveu... e em tudo que ainda vamos viver juntos.
+
+Você é uma das melhores coisas que já aconteceu na minha vida.
+
+Mesmo nos dias difíceis, é você que me dá força. Seu sorriso muda completamente o meu dia.
+
+Eu sei que não sou perfeito... mas eu tô aqui de verdade, tentando por você, por nós.
+
+Eu quero um futuro com você. Quero construir nossa vida juntos, realizar nossos sonhos, nossas promessas...
+
+Você é minha futura esposa, minha paz, minha escolha todos os dias.
+
+Sem você nada faz sentido.
+
+A gente vai vencer tudo junto, eu acredito na gente.
+
+Esse site é só um pedacinho do meu amor...
+
+Eu te amo mais do que tudo ❤️`;
+
+let carta=document.getElementById("carta");
+let i=0;
+
+function escrever(){
+    if(i<texto.length){
+        carta.innerHTML+=texto.charAt(i);
+        i++;
+        setTimeout(escrever,45);
+    } else setTimeout(mostrarFotos,2000);
+}
+escrever();
+}
+
+// FOTOS
+const fotos=[
+{src:"foto1.jpg",frase:"Você é meu sorriso ✨"},
+{src:"foto2.jpg",frase:"Tudo com você é melhor 💖"},
+{src:"foto3.jpg",frase:"Te amo ❤️"}
+];
+
+function mostrarFotos(){
+    carta.style.opacity=0;
+    let i=0;
+
+    function loop(){
+        let f=foto;
+        let fr=frase;
+
+        f.style.opacity=0;
+        fr.style.opacity=0;
+
+        setTimeout(()=>{
+            f.src=fotos[i].src;
+            fr.innerText=fotos[i].frase;
+
+            f.style.opacity=1;
+            fr.style.opacity=1;
+
+            f.style.transform="translateX(-50%) scale(1.08)";
+            setTimeout(()=>{
+                f.style.transform="translateX(-50%) scale(1)";
+            },200);
+
+            i++;
+            if(i<fotos.length){
+                setTimeout(loop,6000);
+            } else {
+                setTimeout(()=>{
+                    conteudo.style.display="none";
+                    final.style.display="flex";
+                },4000);
+            }
+        },500);
+    }
+    loop();
+}
+
+// CONTADOR
+let inicioData=new Date("2025-11-19");
+setInterval(()=>{
+    let agora=new Date();
+    let d=Math.floor((agora-inicioData)/(1000*60*60*24));
+    contador.innerText=`Juntos há ${d} dias ❤️`;
+},1000);
+
+// CORAÇÕES
+function chuva(){
+    setInterval(()=>{
+        let h=document.createElement("div");
+        h.className="heart";
+        h.innerText="❤️";
+        h.style.left=Math.random()*100+"%";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),5000);
+    },200);
+}
+
+</script>
+
+</body>
+  </html>
